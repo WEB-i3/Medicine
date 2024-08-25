@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل الدخول</title>
+  <style>
+    /* تصميم عام للصفحة */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    
+    /* تنسيق نموذج تسجيل الدخول */
+    .login-container {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 400px;
+    }
+    
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+    
+    .login-container input {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    
+    .login-container button {
+      background-color: #dc035d;
+      border: none;
+      color: white;
+      padding: 14px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+      border-radius: 25px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      width: 100%;
+    }
+    
+    .login-container button:hover {
+      background-color: #fa56ae;
+      transform: translateY(-3px);
+    }
+    
+    .login-container p {
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>تسجيل الدخول</h2>
+    <input type="email" placeholder="البريد الإلكتروني" value="ghwoqp_1234@gmail.com">
+    <input type="password" placeholder="كلمة المرور" value="62619324">
+    <button onclick="navigateToPage()">تسجيل الدخول</button>
+    <p>هل نسيت كلمة المرور؟ <a href="#">اضغط هنا</a></p>
+  </div>
+  <script>
+    function navigateToPage() {
+      // استبدل 'صفحة_اخرى.html' بالمسار الفعلي للصفحة التي تريد الانتقال إليها
+      window.location.href = 'alert.html';
+    }
+  </script>
+</body>
+</html>

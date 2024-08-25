@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة الأدوية</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #f8e9f0;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 40px;
+    }
+
+    .form-group {
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    select, input[type="time"] {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 16px;
+      font-family: 'Tajawal', sans-serif;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 14px 20px;
+      font-size: 18px;
+      font-family: 'Tajawal', sans-serif;
+      background-color: #dc035d;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #fa56ae;
+    }
+
+    .alert {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .alert.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .alert h3 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      color: #333;
+    }
+
+    .alert p {
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+      color: #555;
+    }
+
+    .alert button {
+      background-color: #dc035d;
+      color: #fff;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .alert button:hover {
+      background-color: #fa56ae;
+    }
+
+    #reminders {
+      margin-top: 40px;
+    }
+
+    .reminder {
+      background-color: white;
+      padding: 20px;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .reminder h3 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .reminder p {
+      margin-bottom: 10px;
+    }
+
+    .reminder button {
+      width: auto;
+      padding: 8px 16px;
+      font-size: 14px;
+      background-color: #db0606;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>إدارة الأدوية</h1>
+    <div class="form-group">
+      <label for="disease">نوع المرض:</label>
+      <select id="disease">
+        <option value="قلب">قلب</option>
+        <option value="سكري">سكري</option>
+        <option value="أمراض مزمنة">أمراض مزمنة</option>
+        <option value="ضغط">ضغط</option>
+        <option value="سرطان">سرطان</option>
+        <option value="إكزيما">إكزيما</option>
+        <option value="الإيدز">الإيدز</option>
+        <option value="حمى">حمى</option>
+        <option value="أمراض الدم">أمراض الدم</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="dose">عدد الجرعات:</label>
+      <select id="dose">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="time">الوقت:</label>
+      <input type="time" id="time" min="08:00" max="22:00" step="900">
+    </div>
+
+    <button onclick="setReminder()">إضافة تذكير</button>
+
+    <div id="reminders"></div>
+
+    <div id="alert" class="alert">
+        <div class="alert-content">
+        <h3>تناول جرعتك</h3>
+        <p id="alert-message"></p>
+        <button id="alert-close-btn" onclick="closeAlert(); deleteReminder({index});">موافق</button>
+      </div>
+      </div>
+  </div>
+
+  <script>
+    var reminders = [];
+    var alarmAudio = new Audio('alert.mp3');
+    var alertElement = document.getElementById("alert");
+  
+    function setReminder() {
+      var disease = document.getElementById("disease").value;
+      var dose = document.getElementById("dose").value;
+      var time = document.getElementById("time").value;
+  
+      var reminder = {
+        disease: disease,
+        dose: dose,
+        time: time
+      };
+  
+      reminders.push(reminder);
+      displayReminders();
+    }
+  
+    function displayReminders() {
+      var remindersContainer = document.getElementById("reminders");
+      remindersContainer.innerHTML = "";
+  
+      reminders.forEach(function(reminder, index) {
+        var reminderElement = document.createElement("div");
+        reminderElement.classList.add("reminder");
+  
+        var reminderContent = `
+          <h3>تذكير ${index + 1}</h3>
+          <p>نوع المرض: ${reminder.disease}</p>
+          <p>عدد الجرعات: ${reminder.dose}</p>
+          <p>الوقت: ${reminder.time}</p>
+          <button onclick="deleteReminder(${index})">إزالة التذكير</button>
+        `;
+  
+        reminderElement.innerHTML = reminderContent;
+        remindersContainer.appendChild(reminderElement);
+      });
+    }
+  
+    function deleteReminder(index) {
+      reminders.splice(index, 1);
+      displayReminders();
+    }
+  
+    function closeAlert() {
+      alertElement.classList.remove("show");
+      alarmAudio.pause();
+      alarmAudio.currentTime = 0;
+    }
+  
+    function checkReminders() {
+      var currentTime = new Date().toLocaleTimeString('en-US', { hour12: false, hour: 'numeric', minute: 'numeric' });
+  
+      for (var i = 0; i < reminders.length; i++) {
+        if (reminders[i].time === currentTime) {
+          alarmAudio.currentTime = 0;
+          alarmAudio.play();
+          showAlert(`حان الوقت لجرعة ${reminders[i].dose} من دواء ${reminders[i].disease}!`);
+          break; // خروج من الحلقة بعد العثور على أول تذكير متطابق
+        }
+      }
+    }
+  
+    setInterval(checkReminders, 1000);
+  
+    function showAlert(message) {
+      document.getElementById("alert-message").textContent = message;
+      alertElement.classList.add("show");
+    }
+  </script>
+  </div>
+</body>
+</html>

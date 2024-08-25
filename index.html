@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>صفحة اللوجو</title>
+  <style>
+    /* تصميم عام للصفحة */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+    
+    /* تنسيق قسم اللوجو */
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 400px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      margin: 40px;
+    }
+    .logo-container img {
+      max-width: 250px;
+      transition: transform 0.3s ease;
+    }
+    .logo-container img:hover {
+      transform: scale(1.1);
+    }
+    
+    /* تنسيق أزرار التسجيل */
+    .buttons-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+    }
+    .buttons-container button {
+      background-color: #dc035d;
+      border: none;
+      color: white;
+      padding: 14px 35px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 0 15px;
+      cursor: pointer;
+      border-radius: 25px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .buttons-container button:hover {
+      background-color: #fa56ae;
+      transform: translateY(-3px);
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-container">
+    <img src="logo.jpg" alt="لوجو الشركة">
+  </div>
+  
+  <div class="buttons-container">
+    <button onclick="navigateToPage()">تسجيل الدخول</button>
+    <button>تسجيل جديد</button>
+  </div>
+  <script>
+    function navigateToPage() {
+      // استبدل 'صفحة_اخرى.html' بالمسار الفعلي للصفحة التي تريد الانتقال إليها
+      window.location.href = 'registration.html';
+    }
+  </script>
+</body>
+</html>
